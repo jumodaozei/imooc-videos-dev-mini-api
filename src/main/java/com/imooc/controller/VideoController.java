@@ -27,12 +27,12 @@ public class VideoController {
 
 	@ApiOperation(value = "用户上传视频", notes = "用户上传视频的接口")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "query"),
-			@ApiImplicitParam(name = "bgmId", value = "背景音乐id", required = false, dataType = "String", paramType = "query"),
-			@ApiImplicitParam(name = "videoSeconds", value = "背景音乐播放长度", required = true, dataType = "double", paramType = "query"),
-			@ApiImplicitParam(name = "videoWidth", value = "视频宽度", required = true, dataType = "int", paramType = "query"),
-			@ApiImplicitParam(name = "videoHeight", value = "视频高度", required = true, dataType = "int", paramType = "query"),
-			@ApiImplicitParam(name = "desc", value = "视频描述", required = false, dataType = "String", paramType = "query") })
+			@ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "bgmId", value = "背景音乐id", required = false, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "videoSeconds", value = "背景音乐播放长度", required = true, dataType = "double", paramType = "form"),
+			@ApiImplicitParam(name = "videoWidth", value = "视频宽度", required = true, dataType = "int", paramType = "form"),
+			@ApiImplicitParam(name = "videoHeight", value = "视频高度", required = true, dataType = "int", paramType = "form"),
+			@ApiImplicitParam(name = "desc", value = "视频描述", required = false, dataType = "String", paramType = "form") })
 	@PostMapping(value = "/upload", headers = "content-type=multipart/form-data")
 	public IMoocJSONResult uploadFace(String userId, String bgmId, double videoSeconds, int videoWidth, int videoHeight,
 			String desc,
