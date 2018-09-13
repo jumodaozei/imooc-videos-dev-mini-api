@@ -13,4 +13,11 @@ public class BasicController {
 	
 	public static final String USER_REDIS_SESSION = "user-redis-session";
 	
+	//文件保存命名空间
+	public static final String FILESPACE = "D:\\imooc-videos-dev";
+	
+	
+	//ffmpeg所在目录
+	public static final String FFMPEGEXE = "D:\\ffmpeg\\bin\\ffmpeg.exe";
+	
 }
