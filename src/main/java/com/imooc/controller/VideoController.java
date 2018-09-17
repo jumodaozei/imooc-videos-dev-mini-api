@@ -23,6 +23,7 @@ import com.imooc.service.VideoService;
 import com.imooc.utils.FetchVideoCover;
 import com.imooc.utils.IMoocJSONResult;
 import com.imooc.utils.MergeVideoMp3;
+import com.imooc.utils.PagedResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -209,5 +210,17 @@ public class VideoController extends BasicController {
 		videoService.updateVideo(videoId, uploadPathDB);
 		
 		return IMoocJSONResult.ok();
+	}
+	
+	
+	@PostMapping(value = "/showAll")
+	public IMoocJSONResult showAll(Integer page) throws Exception {
+		
+		if(page == null) {
+			page = 1;
+		}
+		PagedResult result = videoService.getAllVideos(page, PAGE_SIZE);
+		
+		return IMoocJSONResult.ok(result);
 	}
 }
