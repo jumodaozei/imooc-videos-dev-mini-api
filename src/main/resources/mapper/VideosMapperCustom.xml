@@ -27,6 +27,6 @@
   from videos v, users u
  where v.user_id = u.id
    and v.status = 1
- order by v.create_time
+ order by v.create_time desc
   </select>
 </mapper>
