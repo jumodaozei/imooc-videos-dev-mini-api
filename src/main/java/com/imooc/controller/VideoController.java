@@ -10,6 +10,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -212,15 +213,29 @@ public class VideoController extends BasicController {
 		return IMoocJSONResult.ok();
 	}
 	
-	
+	/**
+	 * 
+	 * @param video
+	 * @param isSaveRecord 1-需要保存 0-不需要保存
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping(value = "/showAll")
-	public IMoocJSONResult showAll(Integer page) throws Exception {
+	public IMoocJSONResult showAll(@RequestBody Videos video, Integer isSaveRecord, Integer page) throws Exception {
 		
 		if(page == null) {
 			page = 1;
 		}
-		PagedResult result = videoService.getAllVideos(page, PAGE_SIZE);
+		PagedResult result = videoService.getAllVideos(video,isSaveRecord,page, PAGE_SIZE);
 		
 		return IMoocJSONResult.ok(result);
+	}
+	
+	
+	@PostMapping(value = "/hot")
+	public IMoocJSONResult hot() throws Exception {
+		
+		return IMoocJSONResult.ok(videoService.getHotWords());
 	}
 }
