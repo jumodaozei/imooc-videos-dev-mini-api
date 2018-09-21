@@ -54,7 +54,7 @@ public class MiniInterceptor implements HandlerInterceptor {
 			return false;
 		}
 		return true;
-	}
+	} 
 	
 	public void returnErrorResponse(HttpServletResponse response, IMoocJSONResult result) 
 			throws IOException, UnsupportedEncodingException {
