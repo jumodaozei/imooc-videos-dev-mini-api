@@ -232,6 +232,46 @@ public class VideoController extends BasicController {
 		return IMoocJSONResult.ok(result);
 	}
 	
+	@PostMapping(value = "/showMyLike")
+	public IMoocJSONResult showMyLike(String userId, Integer page, Integer pageSize) throws Exception {
+		
+		if(StringUtils.isBlank(userId)) {
+			return IMoocJSONResult.errorMap("userId不能为空！");
+		}
+		
+		if(page == null) {
+			page = 1;
+		}
+		if(pageSize == null) {
+			pageSize = 6;
+		}
+		
+		PagedResult videoList = videoService.queryMyLikeVideos(userId, page, pageSize);
+		
+		return IMoocJSONResult.ok(videoList);
+	}
+	
+	/**
+	 * @Description: 我关注的人发的视频
+	 */
+	@PostMapping("/showMyFollow")
+	public IMoocJSONResult showMyFollow(String userId, Integer page) throws Exception {
+		
+		if (StringUtils.isBlank(userId)) {
+			return IMoocJSONResult.ok();
+		}
+		
+		if (page == null) {
+			page = 1;
+		}
+
+		int pageSize = 6;
+		
+		PagedResult videosList = videoService.queryMyFollowVideos(userId, page, pageSize);
+		
+		return IMoocJSONResult.ok(videosList);
+	}
+	
 	
 	@PostMapping(value = "/hot")
 	public IMoocJSONResult hot() throws Exception {

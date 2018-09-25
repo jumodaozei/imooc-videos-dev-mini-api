@@ -22,6 +22,7 @@ import com.imooc.utils.IMoocJSONResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -92,9 +93,12 @@ public class UserController extends BasicController {
 	}
 	
 	@ApiOperation(value = "查询用户信息", notes = "查询用户信息的接口")
-	@ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "query")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "fanId", value = "粉丝id", required = true, dataType = "String", paramType = "query")
+	})
 	@PostMapping("/query")
-	public IMoocJSONResult query(String userId) throws Exception {
+	public IMoocJSONResult query(String userId,String fanId) throws Exception {
 		
 		
 		if(StringUtils.isBlank(userId)) {
@@ -104,6 +108,8 @@ public class UserController extends BasicController {
 		Users user = userServicel.queryUserInfo(userId);
 		UsersVO userVO = new UsersVO();
 		BeanUtils.copyProperties(user, userVO);
+		
+		userVO.setFollow(userServicel.queryIsFollow(userId, fanId));
 		
 		return IMoocJSONResult.ok(userVO);
 	}
@@ -129,6 +135,32 @@ public class UserController extends BasicController {
 		bean.setUserLikeVideo(userLikeVideo);
 		
 		return IMoocJSONResult.ok(bean);
+	}
+	
+	@PostMapping("/beyourfans")
+	public IMoocJSONResult beyourfans(String userId,String fanId) throws Exception {
+		
+		
+		if(StringUtils.isBlank(userId) || StringUtils.isBlank(fanId)) {
+			return IMoocJSONResult.errorMsg("");
+		}
+		
+		userServicel.saveUserFanRelation(userId, fanId);
+		
+		return IMoocJSONResult.ok("关注成功！");
+	}
+	
+	@PostMapping("/dontbeyourfans")
+	public IMoocJSONResult dontbeyourfans(String userId,String fanId) throws Exception {
+		
+		
+		if(StringUtils.isBlank(userId) || StringUtils.isBlank(fanId)) {
+			return IMoocJSONResult.errorMsg("");
+		}
+		
+		userServicel.deleteUserFanRelation(userId, fanId);
+		
+		return IMoocJSONResult.ok("取消关注成功！");
 	}
 
 }
